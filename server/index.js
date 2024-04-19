@@ -5,9 +5,10 @@ import http from "http";
 import mongoose from "mongoose";
 import "dotenv/config";
 import routes from "./src/routes/index.js";
+const port = normalizePort(process.env.PORT || "3000");
 
 const app = express();
-
+app.set("port", port);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -15,18 +16,66 @@ app.use(cookieParser());
 
 app.use("/api/v1", routes);
 
-const port = process.env.PORT || 6000;
+
 
 const server = http.createServer(app);
 
-mongoose.connect(process.env.MONGODB_URL).then(() => {
-  console.log("Mongodb connected");
-  server.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
+
+mongoose
+  .connect(process.env.MONGODB_URL)
+  .then(() => {
+    server.listen(port);
+    server.on("error", onError);
+    server.on("listening", onListening);
+    console.log(`mongodb connected ${process.env.MONGODB_URL}`);
+  })
+  .catch((err) => {
+    console.log(err);
+    process.exit(1);
   });
-}).catch((err) => {
-  console.log({ err });
-  process.exit(1);
-});
+
+function normalizePort(val) {
+  const port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+function onError(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+function onListening() {
+  const addr = server.address();
+  const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  debug("Listening on " + bind);
+}
 
 //test
