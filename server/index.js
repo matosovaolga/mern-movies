@@ -17,7 +17,7 @@ app.use(express.json());
 
 // const port = normalizePort(process.env.PORT || 3000);
 
-const server = http.createServer(app);
+// const server = http.createServer(app);
 
 // mongoose.connect(process.env.MONGODB_URL).then(() => {
 //   console.log("Mongodb connected");
