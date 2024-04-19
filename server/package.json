@@ -1,12 +1,14 @@
 {
-  "name": "mern-stack-movie-2022",
+  "name": "mern-movies",
   "type": "module",
   "version": "0.0.1",
-  "author": "tuat tran anh",
+  "author": "",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "dev": "nodemon index.js",
+    "build": "node build --output public"
   },
   "dependencies": {
     "axios": "^1.2.0",
