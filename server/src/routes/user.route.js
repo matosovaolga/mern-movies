@@ -1,5 +1,5 @@
 const express = require("express");
-const { body } = require("express-validator");
+// const { body } = require("express-validator");
 // const favoriteController = require("../controllers/favorite.controller.js");
 // const userController = require("../controllers/user.controller.js");
 // const requestHandler = require("../handlers/request.handler.js");
