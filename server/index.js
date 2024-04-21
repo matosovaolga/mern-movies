@@ -23,12 +23,14 @@ const PORT = process.env.PORT || 6000;
 
 const server = http.createServer(app);
 
+console.log(process.env.MONGODB_URL);
+
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => {
     console.log("Mongodb connected");
-    server.listen(port, () => {
-      console.log(`Server is listening on port ${port}`);
+    server.listen(PORT, () => {
+      console.log(`Server is listening on port ${PORT}`);
     });
   })
   .catch((err) => {

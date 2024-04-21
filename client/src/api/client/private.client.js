@@ -3,6 +3,7 @@ import queryString from "query-string";
 
 const baseURL = "https://mern-movies-api.vercel.app/api/v1/";
 
+
 const privateClient = axios.create({
   baseURL,
   paramsSerializer: {
