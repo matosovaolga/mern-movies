@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 const cors =  require("cors");
 const http = require("http");
 const dotenv =  require("dotenv/config");
+const mongoose = require("mongoose");
 const routes = require("./src/routes/index.js");
 
 
@@ -21,7 +22,20 @@ app.use("/api/v1", routes);
 const PORT = process.env.PORT || 6000;
 
 const server = http.createServer(app);
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+
+mongoose
+  .connect(process.env.MONGODB_URL)
+  .then(() => {
+    console.log("Mongodb connected");
+    server.listen(port, () => {
+      console.log(`Server is listening on port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.log({ err });
+    process.exit(1);
+  });
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
 module.exports = app;
