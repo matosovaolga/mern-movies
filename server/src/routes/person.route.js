@@ -7,4 +7,4 @@ router.get("/:personId/medias", personController.personMedias);
 
 router.get("/:personId", personController.personDetail);
 
-export default router;
+module.exports = router;
