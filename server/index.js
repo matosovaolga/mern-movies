@@ -19,6 +19,8 @@ app.get("/", (req, res) => {
 app.use("/api/v1", routes);
 
 const PORT = process.env.PORT || 6000;
+
+const server = http.createServer(app);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
