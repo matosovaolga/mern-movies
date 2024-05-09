@@ -10,23 +10,25 @@ const routes = require("./src/routes/index.js");
 const app = express();
 
 app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
+const PORT = process.env.PORT || 6000;
 app.get("/", (req, res) => {
   res.send("Express on Vercel");
 });
 app.use("/api/v1", routes);
 
-const PORT = process.env.PORT || 6000;
+
 
 const server = http.createServer(app);
 
-console.log(process.env.MONGODB_URL);
-
 mongoose
-  .connect(process.env.MONGODB_URL)
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Mongodb connected");
     server.listen(PORT, () => {
@@ -37,7 +39,5 @@ mongoose
     console.log({ err });
     process.exit(1);
   });
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+
 module.exports = app;
